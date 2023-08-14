@@ -1,0 +1,40 @@
+name: parkapp
+
+on:
+  workflow_dispatch:
+  pull_request:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Download autotests binaries
+        uses: robinraju/release-downloader@v1.2
+        with:
+          repository: Yandex-Practicum/architect-autotests-bin
+          latest: true
+          fileName: "*"
+          out-file-path: .tools
+
+      - name: Setup autotest binary
+        run: |
+          chmod -R +x $GITHUB_WORKSPACE/.tools
+          mv $GITHUB_WORKSPACE/.tools/parkapptest /usr/local/bin/parkapptest
+
+      - name: Build the stack
+        run: docker-compose up -d
+
+      - name: Test
+        run: |
+          parkapptest \
+            -test.v -test.run=^TestParkApp$ \
+            -parkapp-host=localhost \
+            -parkapp-port=8080 \

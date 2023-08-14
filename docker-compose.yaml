@@ -1,0 +1,8 @@
+version: '3'
+services:
+  app-backend:
+    container_name: app-backend
+    build: .
+    ports:
+      - "8080:8080"
+  # далее вам нужно добавить все зависимости, вроде СУБД, сервиса сбора метрик и так далее
