@@ -35,6 +35,6 @@ jobs:
       - name: Test
         run: |
           parkapptest \
-            -test.v -test.run=^TestParkApp$ \
+            -test.v -test.run=^TestParkapp$ \
             -parkapp-host=localhost \
             -parkapp-port=8080 \
