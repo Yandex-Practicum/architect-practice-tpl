@@ -10,4 +10,10 @@
 #### Диаграма С2 (containers)
 
 
-![c1](./images/c2.png)
+![c2](./images/c2.png)
+
+
+#### Диаграма С3 (components)
+
+
+![c3](./images/c3.png)
