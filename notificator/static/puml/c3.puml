@@ -1,0 +1,31 @@
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Диаграмма компонента сервиса рассылки оповещений
+
+Container(message_broker, "Брокер сообщений", "RabbitMQ", "Хранит очередь сообщений, контролирует ширину каналов, ретраи и доставку.")
+ContainerDb(db, "Database", "PostgreSQL", "Хранит настройки уведомлений каждого пользователя.")
+
+Person(sender_app, "Отправитель оповещений", "Компонент системы, отправляющий оповещение. Хранит основные пользовательские данные")
+Container(gateway, "API Gateway", "Nginx", "Осуществляет авторизацию и балансировку нагрузки")
+
+Container_Boundary(api, "Notifier Application") {
+    Component(settings, "Контроллер установки настроек", "MVC Rest Controller", "Позволяет отправителю установить настройки для отправки оповещений")
+    Component(send_to, "Контроллер приема оповещений", "MVC Rest Controller", "Позволяет отправителю отослать оповещение с указанием каналов и пользователей")
+    Component(sender, "Компонент для отсылки оповещений", "Golang app", "Добавляет оповещения в очередь согласно заданным настройкам и параметрам отправки")
+
+    Rel(settings, db, "Writes to")
+    Rel(settings, sender, "Uses")
+    Rel(send_to, sender, "Uses")
+    Rel(sender, db, "Reads from")
+    Rel(sender, message_broker, "Pushes messages")
+}
+
+Rel(sender_app, gateway, "JSON/HTTPS")
+Rel(gateway, settings, "JSON/HTTPS")
+Rel(gateway, send_to, "JSON/HTTPS")
+
+@enduml

@@ -1,0 +1,38 @@
+@startuml
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+LAYOUT_WITH_LEGEND()
+
+title Диаграмма контейнеров для сервиса рассылки сообщений
+
+Person(sender_app, "Отправитель оповещений", "Компонент системы, отправляющий оповещение. Хранит основные пользовательские данные")
+
+System_Boundary(c1, "Notifier") {
+    Container(gateway, "API Gateway", "Nginx", "Осуществляет авторизацию и балансировку нагрузки")
+    Container(notifier_app, "Сервис рассылки оповещений", "Golang server", "Управляет отправкой оповещений, дает возможность настройки и мультиплексирования отправки")
+    Container(message_queue, "Брокер сообщений", "RabbitMQ", "Хранит очередь сообщений, контролирует ширину каналов, ретраи и доставку")
+    Container(sms_processor, "Компонент для предобработки и отправки SMS", "Golang server", "")
+    Container(email_processor, "Компонент для предобработки и отправки Email", "Golang server", "")
+    Container(push_processor, "Компонент для предобработки и отправки Push-нотификаций", "Golang server", "")
+    ContainerDb(database, "Database", "PostgreSQL", "Хранит настройки уведомлений каждого пользователя")
+}
+
+System_Ext(email_system, "Система отправки Email сообщений")
+System_Ext(push_system, "Система отправки Push-нотификаций")
+System_Ext(sms_system, "Система отправки SMS")
+
+Rel(sender_app, gateway, "Присылает оповещение с указанием каналов отправки")
+Rel(sender_app, gateway, "Меняет настройки оповещений для адресата")
+Rel(gateway, notifier_app, "Перенаправляет запросы на отправку")
+Rel_Neighbor(notifier_app, message_queue, "Отправляет сообщения в очередь")
+Rel(message_queue, email_processor, "Отправляет сообщения на предобработку")
+Rel(message_queue, push_processor , "Отправляет сообщения на предобработку")
+Rel(message_queue, sms_processor, "Отправляет сообщения на предобработку")
+Rel(email_processor, email_system, "Отправляет сообщения в систему отправки Email")
+Rel(push_processor, push_system, "Отправляет сообщения в систему отправки Push-нотификаций")
+Rel(sms_processor, sms_system, "Отправляет сообщения в систему отправки SMS")
+
+Rel(notifier_app, database, "Получает и сохраняет настройки оповещений адресата")
+
+@enduml
