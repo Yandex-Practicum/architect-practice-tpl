@@ -27,4 +27,4 @@ vendor/
 *.bkp
 
 # VS project
-/app/*
+#/app/*
