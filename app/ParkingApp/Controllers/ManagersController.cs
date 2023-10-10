@@ -40,23 +40,50 @@ namespace ParkingApp.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("employees")]
-        public async Task<IActionResult> GetEmployees() 
+        public async Task<IActionResult> GetEmployees()
         {
-            var res = await _managers.GetEmployees();
-            return Ok(new { employees = res });
+            if (await _managers.CheckManagerRequest(Request))
+            {
+                var res = await _managers.GetEmployees();
+                return Ok(new { employees = res });
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
-
+        /// <summary>
+        /// Получение информации о сотруднике
+        /// </summary>
+        /// <param name="login"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("employees/{login}")]
-        public IActionResult GetEmployee(string login)
+        public async Task<IActionResult> GetEmployee(string login)
         {
-            return Ok($"GET employee {login}");
+            if (await _managers.CheckManagerRequest(Request))
+            {
+                var res = _managers.GetEmployee(login);
+                if (res is not null)
+                    return Ok(res);
+                else
+                    return NotFound();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
         [HttpPost]
         [Route("employees")]
-        public IActionResult AddEmployee()
+        public async Task<IActionResult> AddEmployee(AddEmployeeQuery query)
         {
-            return Ok("POST employees");
+            if (await _managers.CheckManagerRequest(Request))
+            {
+                var res = await _managers.AddEmployee(query.Login);
+                if (res)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
 
         [HttpDelete]

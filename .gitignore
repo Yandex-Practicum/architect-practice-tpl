@@ -26,5 +26,5 @@ vendor/
 # backups
 *.bkp
 
-# VS project
-#/app/*
+# test
+/test/*
