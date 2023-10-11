@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using ParkingApp.Model;
+using ParkingApp.Model.EntityFramework;
 using ParkingApp.Services.Managers;
 using System.Text.Json;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ParkingApp.Controllers
 {
@@ -88,34 +90,114 @@ namespace ParkingApp.Controllers
 
         [HttpDelete]
         [Route("employees/{login}")]
-        public IActionResult DeleteEmployee(string login)
+        public async Task<IActionResult> DeleteEmployee(string login)
         {
-            return Ok($"DELETE employees {login}");
+            if (await _managers.CheckManagerRequest(Request))
+            {
+                var res = await _managers.DeleteEmployee(login);
+                if (res)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
 
         [HttpPost]
         [Route("parking-scheme")]
-        public IActionResult LoadParkingScheme()
+        public async Task<IActionResult> LoadParkingScheme()
         {
-            return Ok("POST parking-scheme");
+            if (await _managers.CheckManagerRequest(Request))
+            {
+                try
+                {
+                    var res = Request.BodyReader.AsStream();
+                    FileStream fs = new(Path.Join(".", "ParkingScheme", "scheme.png"), FileMode.Create);
+                    res.CopyTo(fs);
+                    fs.Flush();
+                    fs.Close();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+                return Ok();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
+        /// <summary>
+        /// ƒобавление парковочных мест в систему
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("parking-spots")]
-        public IActionResult AddSpot()
+        public async Task<IActionResult> AddSpots(List<string> spots)
         {
-            return Ok("POST parking-spots");
+            if (await _managers.CheckManagerRequest(Request))
+            {
+                try
+                {
+                    var res = await _managers.AddSpots(spots);
+                    if (res)
+                        return Ok();
+                    else
+                        return BadRequest();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
+        /// <summary>
+        /// ѕолучение всех доступных парковочных мест
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("parking-spots")]
-        public IActionResult GetSpots()
+        public async Task<IActionResult> GetSpots()
         {
-            return Ok("GET parking-spots");
+            if (await _managers.CheckManagerRequest(Request))
+            {
+                try
+                {
+                    var res = await _managers.GetAllSpots();
+                    if (res != null)
+                        return Ok(new { parking_spots = res});
+                    else
+                        return BadRequest();
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
+        /// <summary>
+        /// ”даление парковочного места
+        /// </summary>
+        /// <param name="spotCode"></param>
+        /// <returns></returns>
         [HttpDelete]
         [Route("parking-spots/{spotCode}")]
-        public IActionResult DeleteSpot(string spotCode)
+        public async Task<IActionResult> DeleteSpot(string spotCode)
         {
-            return Ok($"DELETE parking-spots/{spotCode}");
+            if (await _managers.CheckManagerRequest(Request))
+            {
+                var res = await _managers.DeleteSpot(spotCode);
+                if (res)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
 
         [HttpPost]

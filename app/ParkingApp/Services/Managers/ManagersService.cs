@@ -128,6 +128,75 @@ namespace ParkingApp.Services.Managers
             return result;
         }
 
+        public async Task<bool> AddSpots(List<string> spots)
+        {
+            bool result = false;
+            try
+            {
+                using var db = new ParkingContext();
+                foreach (string s in spots)
+                {
+                    var exist = db.Spots.Any(sp => sp.SpotCode == s);
+                    if (!exist)
+                        db.Spots.Add(new Spot { SpotCode = s });
+                }
+                var res = await db.SaveChangesAsync();
+                result = res > 0;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return false;
+            }
+            return result;
+        }
+
+        public async Task<List<string>> GetAllSpots()
+        {
+            List<string> result = new ();
+            try
+            {
+                using var db = new ParkingContext();
+                var res = (from sp in db.Spots
+                           select sp.SpotCode).ToList();
+                if (res is not null)
+                    result = res;  
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return new List<string>();
+            }
+            return result;
+        }
+
+        public async Task<bool> DeleteSpot(string spot)
+        {
+            bool result = false;
+            try
+            {
+                using var db = new ParkingContext();
+                var delSpot = db.Spots.Where(s => s.SpotCode == spot).FirstOrDefault();
+                if (delSpot is not null)
+                {
+                    db.Spots.Remove(delSpot);
+                    var res = await db.SaveChangesAsync();
+                    if (res > 0)
+                        result = true;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return false;
+            }
+            return result;
+        }
+
         public async Task<bool> CheckManagerRequest(HttpRequest request)
         {
             bool result = false;

@@ -20,6 +20,7 @@ namespace ParkingApp.Model.EntityFramework
         [NotMapped]
         [JsonPropertyName("id")]
         public string? IdStr {  get; set; }
+        [NotMapped]
         [JsonPropertyName("spot_code")]
         public string SpotCode { get; set; }
         [JsonPropertyName("date")]
