@@ -17,10 +17,10 @@
 #### Последствия:
 
 #### Положительные:
-* Опенсорсное решение
-* Гибкое логгирование
-* Балансировка
-* Безопасность
+* Опенсорсное решение http://nginx.org/LICENSE
+* Гибкое логгирование https://docs.nginx.com/nginx/admin-guide/monitoring/logging/
+* Балансировка http://nginx.org/en/docs/http/load_balancing.html
+* Безопасность https://docs.nginx.com/nginx/admin-guide/security-controls/
 * Отсутствие дополнительных расходов на внедрение нового инструмента и обучение команды
 
 #### Отрицательные:
