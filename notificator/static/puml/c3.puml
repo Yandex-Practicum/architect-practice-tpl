@@ -10,7 +10,7 @@ Container(message_broker, "Брокер сообщений", "RabbitMQ", "Хра
 ContainerDb(db, "Database", "PostgreSQL", "Хранит настройки уведомлений каждого пользователя.")
 
 Person(sender_app, "Отправитель оповещений", "Компонент системы, отправляющий оповещение. Хранит основные пользовательские данные")
-Container(gateway, "API Gateway", "Nginx", "Осуществляет авторизацию и балансировку нагрузки")
+Container(gateway, "API Gateway", "Nginx", "Осуществляет аутентификацию с помощью API Key и балансировку нагрузки")
 
 Container_Boundary(api, "Notifier Application") {
     Component(settings, "Контроллер установки настроек", "MVC Rest Controller", "Позволяет отправителю установить настройки для отправки оповещений")
@@ -24,7 +24,7 @@ Container_Boundary(api, "Notifier Application") {
     Rel(sender, message_broker, "Pushes messages")
 }
 
-Rel(sender_app, gateway, "JSON/HTTPS")
+Rel(sender_app, gateway, "JSON/HTTPS + API Key")
 Rel(gateway, settings, "JSON/HTTPS")
 Rel(gateway, send_to, "JSON/HTTPS")
 
