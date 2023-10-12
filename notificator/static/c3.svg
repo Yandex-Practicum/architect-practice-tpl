@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="1213px" preserveAspectRatio="none" style="width:1028px;height:1213px;" version="1.1" viewBox="0 0 1028 1213" width="1028px" zoomAndPan="magnify"><defs/><g><!--MD5=[337a5093034abfc38aa3e4855d9e9740]
+cluster c1_service--><rect fill="#FFFFFF" height="829.5" style="stroke: #444444; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;" width="750" x="241.5" y="24.5"/><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="277" x="478" y="41.3516">Сервис отправки оповещений</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="62" x="585.5" y="56.2637">[System]</text><!--MD5=[1180e34ae0124f80ca240d09d4723520]
+cluster c2_message_queue--><rect fill="#FFFFFF" height="124" style="stroke: #444444; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;" width="686" x="280.5" y="515"/><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="178" x="534.5" y="531.8516">Брокер сообщений</text><!--MD5=[566493d44d38ba355d0a79a6096d8d39]
+cluster c1_channel--><rect fill="#FFFFFF" height="124" style="stroke: #444444; stroke-width: 1.0; stroke-dasharray: 7.0,7.0;" width="681" x="277.5" y="933"/><text fill="#444444" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="294" x="471" y="949.8516">Каналы связи (email, push, sms)</text><text fill="#444444" font-family="sans-serif" font-size="12" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="62" x="587" y="964.7637">[System]</text><!--MD5=[25963ad5c50371b12c5adf48cd4a5aa1]
+entity c2_gateway--><rect fill="#438DD5" height="117.7813" style="stroke: #3C7FC0; stroke-width: 1.5;" width="218" x="442.5" y="75.5"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="113" x="495" y="100.3516">API Gateway</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="45" x="529" y="115.2637">[Nginx]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="553.5" y="131.0889"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="198" x="452.5" y="147.3857">Отвечает за авторизацию,</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="134" x="482.5" y="163.6826">маршрутизацию и</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="170" x="466.5" y="179.9795">балансировку нагрузки</text><!--MD5=[8232220cd1d0f43e7d554f3b37a1b647]
+entity c2_notifier_service--><rect fill="#438DD5" height="169" style="stroke: #3C7FC0; stroke-width: 1.5;" width="192" x="562.5" y="283"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="160" x="575.5" y="307.8516">Сервис рассылки</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="116" x="600.5" y="326.4766">оповещений</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="53" x="632" y="341.3887">[Python]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="660.5" y="357.2139"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="159" x="577" y="373.5107">Управляет отправкой</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="168" x="572.5" y="389.8076">оповещений (вместе с</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="152" x="580.5" y="406.1045">фичами настройки и</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="164" x="574.5" y="422.4014">мультиплексирования</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="74" x="621.5" y="438.6982">отправки)</text><!--MD5=[ff756aa5ec70440c82196ce92f25d82c]
+entity c2_sms_processor--><rect fill="#438DD5" height="136.4063" style="stroke: #3C7FC0; stroke-width: 1.5;" width="216" x="257.5" y="702"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="196" x="267.5" y="726.8516">Сервис для отправки</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="38" x="346.5" y="745.4766">SMS</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="53" x="339" y="760.3887">[Python]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="367.5" y="776.2139"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="182" x="272.5" y="792.5107">Отправляет сообщение,</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="185" x="271" y="808.8076">контролирует результат</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="69" x="331" y="825.1045">отправки</text><!--MD5=[1bcedf3391163e10247acb3df9aa0738]
+entity c2_email_processor--><rect fill="#438DD5" height="136.4063" style="stroke: #3C7FC0; stroke-width: 1.5;" width="216" x="508.5" y="702"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="196" x="518.5" y="726.8516">Сервис для отправки</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="44" x="594.5" y="745.4766">Email</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="53" x="590" y="760.3887">[Python]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="618.5" y="776.2139"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="182" x="523.5" y="792.5107">Отправляет сообщение,</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="185" x="522" y="808.8076">контролирует результат</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="69" x="582" y="825.1045">отправки</text><!--MD5=[af0515cfdd5c13b7e138d9265808f7c7]
+entity c2_push_processor--><rect fill="#438DD5" height="136.4063" style="stroke: #3C7FC0; stroke-width: 1.5;" width="216" x="759.5" y="702"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="196" x="769.5" y="726.8516">Сервис для отправки</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="175" x="780" y="745.4766">Push-нотификаций</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="53" x="841" y="760.3887">[Python]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="869.5" y="776.2139"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="182" x="774.5" y="792.5107">Отправляет сообщение,</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="185" x="773" y="808.8076">контролирует результат</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="69" x="833" y="825.1045">отправки</text><!--MD5=[007f9ddd6f6681231d749d83669454eb]
+entity c2_database--><path d="M257.5,314 C257.5,304 352.5,304 352.5,304 C352.5,304 447.5,304 447.5,314 L447.5,420.7813 C447.5,430.7813 352.5,430.7813 352.5,430.7813 C352.5,430.7813 257.5,430.7813 257.5,420.7813 L257.5,314 " fill="#438DD5" style="stroke: #3C7FC0; stroke-width: 1.5;"/><path d="M257.5,314 C257.5,324 352.5,324 352.5,324 C352.5,324 447.5,324 447.5,314 " fill="none" style="stroke: #3C7FC0; stroke-width: 1.5;"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="83" x="311" y="342.8516">Database</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="80" x="312.5" y="357.7637">[PostgreSQL]</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="354.5" y="373.5889"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="135" x="283" y="389.8857">Хранит настройки</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="166" x="267.5" y="406.1826">уведомлений каждого</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="103" x="301" y="422.4795">пользователя</text><!--MD5=[44479089d76bad8eb18d4481e3a9bdff]
+entity c3_sms_queue--><rect fill="#438DD5" height="52.5938" style="stroke: #3C7FC0; stroke-width: 1.5;" width="186" x="296.5" y="561"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="166" x="306.5" y="585.8516">Очередь для SMS</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="68" x="355.5" y="600.7637">[RabbitMQ]</text><!--MD5=[2e5eac5261687b47f6cde8527e21e003]
+entity c3_email_queue--><rect fill="#438DD5" height="71.2188" style="stroke: #3C7FC0; stroke-width: 1.5;" width="198" x="517.5" y="552"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="172" x="527.5" y="576.8516">Очередь для Email</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="105" x="564" y="595.4766">сообщений</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="68" x="582.5" y="610.3887">[RabbitMQ]</text><!--MD5=[95d8256522f03aa66aa572bedea0573a]
+entity c3_push_queue--><rect fill="#438DD5" height="71.2188" style="stroke: #3C7FC0; stroke-width: 1.5;" width="199" x="751" y="552"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="179" x="761" y="576.8516">Очередь для Push-</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="124" x="788.5" y="595.4766">нотификаций</text><text fill="#FFFFFF" font-family="sans-serif" font-size="12" font-style="italic" lengthAdjust="spacingAndGlyphs" textLength="68" x="816.5" y="610.3887">[RabbitMQ]</text><!--MD5=[c2830005283f06f45f93cc42d1f7c1b4]
+entity c2_sms_system--><rect fill="#999999" height="57.25" style="stroke: #8A8A8A; stroke-width: 1.5;" width="192" x="293.5" y="984"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="166" x="303.5" y="1008.8516">Система отправки</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="38" x="370.5" y="1027.4766">SMS</text><!--MD5=[31979d17f5abced7cdba188e81a2ecb1]
+entity c2_email_system--><rect fill="#999999" height="57.25" style="stroke: #8A8A8A; stroke-width: 1.5;" width="192" x="520.5" y="984"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="166" x="530.5" y="1008.8516">Система отправки</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="155" x="539" y="1027.4766">Email сообщений</text><!--MD5=[f1d011624c53a7fc2bffaa072edaf245]
+entity c2_push_system--><rect fill="#999999" height="57.25" style="stroke: #8A8A8A; stroke-width: 1.5;" width="195" x="748" y="984"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="166" x="759.5" y="1008.8516">Система отправки</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="175" x="758" y="1027.4766">Push-нотификаций</text><!--MD5=[965a26539d4211bcbd9d9cadbaf3f42e]
+entity c1_sender--><rect fill="#08427B" height="143.3906" style="stroke: #073B6F; stroke-width: 1.5;" width="219" x="6" y="63"/><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="199" x="16" y="87.8516">Компоненты системы</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="145" x="40" y="106.4766">, которые хотят</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="92" x="66.5" y="125.1016">отправить</text><text fill="#FFFFFF" font-family="sans-serif" font-size="16" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="116" x="57.5" y="143.7266">оповещение</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="117.5" y="160.4951"/><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="192" x="17.5" y="176.792">Controller / Component Foo</text><text fill="#FFFFFF" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="157" x="37" y="193.0889">/ Component Bar / etc.</text><!--MD5=[041f98c3c558d6fca0d2767ef7002df4]
+link c1_sender to c2_gateway--><path d="M225.24,134.5 C289.9,134.5 371.59,134.5 437.05,134.5 " fill="none" id="c1_sender-&gt;c2_gateway" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="442.13,134.5,433.13,130.5,437.13,134.5,433.13,138.5,442.13,134.5" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="74" x="296.75" y="127.5669">https/json</text><!--MD5=[5a2f888f9fd6a7945b4df4bdeaab537c]
+link c2_gateway to c2_notifier_service--><path d="M578.5,193.79 C590.32,219.31 604.45,249.82 617.53,278.05 " fill="none" id="c2_gateway-&gt;c2_notifier_service" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="619.79,282.92,619.6326,273.0724,617.6865,278.384,612.375,276.4379,619.79,282.92" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="74" x="605.5" y="249.0669">https/json</text><!--MD5=[b1f3d281fc7408db505dc222e231102a]
+link c2_notifier_service to c3_sms_queue--><path d="M562.14,446.59 C514.63,485.09 460.19,529.21 425.36,557.44 " fill="none" id="c2_notifier_service-&gt;c3_sms_queue" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="421.21,560.8,430.7231,558.2502,425.0976,557.6557,425.6921,552.0301,421.21,560.8" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="44" x="516.5" y="495.0669">AMQP</text><!--MD5=[c24c730e384c0fbffc020edacca58232]
+link c2_notifier_service to c3_email_queue--><path d="M642.38,452.16 C636.11,484.69 629.23,520.41 624.14,546.84 " fill="none" id="c2_notifier_service-&gt;c3_email_queue" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="623.15,551.99,628.8012,543.9238,624.1086,547.0827,620.9496,542.3901,623.15,551.99" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="44" x="636.5" y="495.0669">AMQP</text><!--MD5=[ee9a1c7958f87386a9ecc2539819b0a7]
+link c2_notifier_service to c3_push_queue--><path d="M732.18,452.16 C761.31,485.24 793.34,521.6 816.72,548.15 " fill="none" id="c2_notifier_service-&gt;c3_push_queue" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="820.11,551.99,817.1761,542.5883,816.8104,548.2333,811.1654,547.8676,820.11,551.99" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="44" x="772.5" y="495.0669">AMQP</text><!--MD5=[1680489014bc7ffe924b0039cdc36b25]
+reverse link c2_database to c2_notifier_service--><path d="M452.81,367.5 C488.03,367.5 527.49,367.5 562.36,367.5 " fill="none" id="c2_database&lt;-c2_notifier_service" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="447.64,367.5,456.64,371.5,452.64,367.5,456.64,363.5,447.64,367.5" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="78" x="466" y="360.5669">(postgres)</text><!--MD5=[284a16e0b68871599e6445d4a6c1c1ec]
+reverse link c2_notifier_service to c2_database--><path d="M557.16,386.26 C553.06,386.73 548.99,387.15 545,387.5 C509.58,390.6 500.42,390.62 465,387.5 C459.37,387 453.6,386.37 447.78,385.63 " fill="none" id="c2_notifier_service&lt;-c2_database" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="562.37,385.63,552.9556,382.7372,557.406,386.2291,553.9141,390.6796,562.37,385.63" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="78" x="466" y="383.5669">(postgres)</text><!--MD5=[1044f3c2f429e5b33abb0525092ec113]
+link c3_sms_queue to c2_sms_processor--><path d="M386.06,614.36 C383.19,635.92 378.97,667.72 375.09,696.88 " fill="none" id="c3_sms_queue-&gt;c2_sms_processor" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="374.42,701.91,379.568,693.5137,375.0771,696.9534,371.6374,692.4624,374.42,701.91" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="44" x="380.5" y="668.0669">AMQP</text><!--MD5=[064540c7df49d08b687f8039752cff5b]
+link c3_email_queue to c2_email_processor--><path d="M616.5,623.3 C616.5,644.14 616.5,671.42 616.5,696.74 " fill="none" id="c3_email_queue-&gt;c2_email_processor" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="616.5,701.77,620.5,692.77,616.5,696.77,612.5,692.77,616.5,701.77" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="44" x="617.5" y="668.0669">AMQP</text><!--MD5=[e151d7d44b2fe877435478480041201b]
+link c3_push_queue to c2_push_processor--><path d="M853.78,623.3 C855.74,644.14 858.31,671.42 860.69,696.74 " fill="none" id="c3_push_queue-&gt;c2_push_processor" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="861.17,701.77,864.3025,692.4326,860.698,696.7923,856.3382,693.1878,861.17,701.77" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="44" x="858.5" y="668.0669">AMQP</text><!--MD5=[ca07a1cc877e11f0891f8a758db607f0]
+link c2_sms_processor to c2_sms_system--><path d="M372.22,838.31 C376.79,884.14 382.64,942.78 386.23,978.72 " fill="none" id="c2_sms_processor-&gt;c2_sms_system" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="386.74,983.85,389.822,974.4958,386.2411,978.875,381.8619,975.2941,386.74,983.85" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="143" x="380.5" y="883.0669">(протокол зависит</text><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="89" x="407.5" y="898.1997">от внешней</text><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="71" x="419" y="913.3325">системы)</text><!--MD5=[6e31ed0b161ce9bc30890598c3fc36e6]
+link c2_email_processor to c2_email_system--><path d="M616.5,838.31 C616.5,884.14 616.5,942.78 616.5,978.72 " fill="none" id="c2_email_processor-&gt;c2_email_system" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="616.5,983.85,620.5,974.85,616.5,978.85,612.5,974.85,616.5,983.85" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="143" x="617.5" y="883.0669">(протокол зависит</text><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="89" x="644.5" y="898.1997">от внешней</text><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="71" x="656" y="913.3325">системы)</text><!--MD5=[272fd16b20440a165654e99c58f2bfc3]
+link c2_push_processor to c2_push_system--><path d="M861.34,838.31 C857.15,884.14 851.79,942.78 848.5,978.72 " fill="none" id="c2_push_processor-&gt;c2_push_system" style="stroke: #666666; stroke-width: 1.0;"/><polygon fill="#666666" points="848.03,983.85,852.8351,975.2528,848.4865,978.8709,844.8685,974.5224,848.03,983.85" style="stroke: #666666; stroke-width: 1.0;"/><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="143" x="858.5" y="883.0669">(протокол зависит</text><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="89" x="885.5" y="898.1997">от внешней</text><text fill="#666666" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="71" x="897" y="913.3325">системы)</text><rect fill="#DDDDDD" height="111.7813" rx="5" ry="5" style="stroke: #000000; stroke-width: 1.0;" width="199" x="818" y="1091"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="0" x="894" y="1110.9951"/><text fill="#000000" font-family="sans-serif" font-size="14" font-weight="bold" lengthAdjust="spacingAndGlyphs" textLength="39" x="899" y="1110.9951">Type</text><rect fill="#08427B" height="16.2969" style="stroke: none; stroke-width: 1.0;" width="70" x="824" y="1114.2969"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="848" y="1127.292"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="49" x="898" y="1127.292">person</text><rect fill="#686868" height="16.2969" style="stroke: none; stroke-width: 1.0;" width="70" x="824" y="1130.5938"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="848" y="1143.5889"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="108" x="898" y="1143.5889">external person</text><rect fill="#1168BD" height="16.2969" style="stroke: none; stroke-width: 1.0;" width="70" x="824" y="1146.8906"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="836" y="1159.8857"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="50" x="898" y="1159.8857">system</text><rect fill="#999999" height="16.2969" style="stroke: none; stroke-width: 1.0;" width="70" x="824" y="1163.1875"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="848" y="1176.1826"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="109" x="898" y="1176.1826">external system</text><rect fill="#438DD5" height="16.2969" style="stroke: none; stroke-width: 1.0;" width="70" x="824" y="1179.4844"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="0" x="836" y="1192.4795"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="65" x="898" y="1192.4795">container</text><line style="stroke: #000000; stroke-width: 1.0;" x1="824" x2="1011" y1="1098" y2="1098"/><line style="stroke: #000000; stroke-width: 1.0;" x1="824" x2="1011" y1="1114.2969" y2="1114.2969"/><line style="stroke: #000000; stroke-width: 1.0;" x1="824" x2="1011" y1="1130.5938" y2="1130.5938"/><line style="stroke: #000000; stroke-width: 1.0;" x1="824" x2="1011" y1="1146.8906" y2="1146.8906"/><line style="stroke: #000000; stroke-width: 1.0;" x1="824" x2="1011" y1="1163.1875" y2="1163.1875"/><line style="stroke: #000000; stroke-width: 1.0;" x1="824" x2="1011" y1="1179.4844" y2="1179.4844"/><line style="stroke: #000000; stroke-width: 1.0;" x1="824" x2="1011" y1="1195.7813" y2="1195.7813"/><line style="stroke: #000000; stroke-width: 1.0;" x1="824" x2="824" y1="1098" y2="1195.7813"/><line style="stroke: #000000; stroke-width: 1.0;" x1="894" x2="894" y1="1098" y2="1195.7813"/><line style="stroke: #000000; stroke-width: 1.0;" x1="1011" x2="1011" y1="1098" y2="1195.7813"/><!--MD5=[e19bb7e7a8759dc20d7a1065b4f3a0f6]
+@startuml c3
+
+
+
+
+
+
+skinparam defaultTextAlignment center
+
+skinparam wrapWidth 200
+skinparam maxMessageSize 150
+
+skinparam rectangle {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam database {
+    StereotypeFontSize 12
+    shadowing false
+}
+
+skinparam Arrow {
+    Color #666666
+    FontColor #666666
+    FontSize 12
+}
+
+skinparam rectangle<<boundary>> {
+    Shadowing false
+    StereotypeFontSize 0
+    FontColor #444444
+    BorderColor #444444
+    BorderStyle dashed
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam rectangle<<person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #08427B
+    BorderColor #073B6F
+}
+
+skinparam rectangle<<external_person>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #686868
+    BorderColor #8A8A8A
+}
+
+skinparam rectangle<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+
+skinparam rectangle<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+
+skinparam database<<system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #1168BD
+    BorderColor #3C7FC0
+}
+
+skinparam database<<external_system>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #999999
+    BorderColor #8A8A8A
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam rectangle<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+
+skinparam database<<container>> {
+    StereotypeFontColor #FFFFFF
+    FontColor #FFFFFF
+    BackgroundColor #438DD5
+    BorderColor #3C7FC0
+}
+
+
+
+
+
+
+
+
+hide stereotype
+legend right
+|=              |= Type |
+|<#08427B>      | person |
+|<#686868>      | external person |
+|<#1168BD>   | system |
+|<#999999>      | external system |
+|<#438DD5>   | container |
+endlegend
+
+
+rectangle "==Компоненты системы, которые хотят отправить оповещение\n\n Controller / Component Foo / Component Bar / etc." <<person>> as c1_sender 
+
+
+rectangle "==Сервис отправки оповещений\n<size:12>[System]</size>" <<boundary>> as c1_service {
+    rectangle "==API Gateway\n//<size:12>[Nginx]</size>//\n\n Отвечает за авторизацию, маршрутизацию и балансировку нагрузки" <<container>> as c2_gateway
+
+    rectangle "==Сервис рассылки оповещений\n//<size:12>[Python]</size>//\n\n Управляет отправкой оповещений (вместе с фичами настройки и мультиплексирования отправки)" <<container>> as c2_notifier_service
+
+    rectangle "==Брокер сообщений" <<boundary>> as c2_message_queue {
+        rectangle "==Очередь для SMS\n//<size:12>[RabbitMQ]</size>//" <<container>> as c3_sms_queue
+        rectangle "==Очередь для Email сообщений\n//<size:12>[RabbitMQ]</size>//" <<container>> as c3_email_queue
+        rectangle "==Очередь для Push-нотификаций\n//<size:12>[RabbitMQ]</size>//" <<container>> as c3_push_queue
+    }
+
+    rectangle "==Сервис для отправки SMS\n//<size:12>[Python]</size>//\n\n Отправляет сообщение, контролирует результат отправки" <<container>> as c2_sms_processor
+    rectangle "==Сервис для отправки Email\n//<size:12>[Python]</size>//\n\n Отправляет сообщение, контролирует результат отправки" <<container>> as c2_email_processor
+    rectangle "==Сервис для отправки Push-нотификаций\n//<size:12>[Python]</size>//\n\n Отправляет сообщение, контролирует результат отправки" <<container>> as c2_push_processor
+
+    database "==Database\n//<size:12>[PostgreSQL]</size>//\n\n Хранит настройки уведомлений каждого пользователя" <<container>> as c2_database
+}
+
+
+rectangle "==Каналы связи (email, push, sms)\n<size:12>[System]</size>" <<boundary>> as c1_channel {
+  rectangle "==Система отправки SMS" <<external_system>> as c2_sms_system
+  rectangle "==Система отправки Email сообщений" <<external_system>> as c2_email_system
+  rectangle "==Система отправки Push-нотификаций" <<external_system>> as c2_push_system
+}
+
+
+c1_sender -RIGHT-> c2_gateway : "===https/json"
+
+c2_gateway - -> c2_notifier_service : "===https/json"
+
+c2_notifier_service -DOWN-> c3_sms_queue : "===AMQP"
+c2_notifier_service -DOWN-> c3_email_queue : "===AMQP"
+c2_notifier_service -DOWN-> c3_push_queue : "===AMQP"
+c2_notifier_service -LEFT-> c2_database : "===(postgres)"
+c2_database -LEFT-> c2_notifier_service : "===(postgres)"
+
+c3_sms_queue - -> c2_sms_processor : "===AMQP"
+c3_email_queue - -> c2_email_processor : "===AMQP"
+c3_push_queue - -> c2_push_processor : "===AMQP"
+
+c2_sms_processor - -> c2_sms_system : "===(протокол зависит от внешней системы)"
+c2_email_processor - -> c2_email_system : "===(протокол зависит от внешней системы)"
+c2_push_processor - -> c2_push_system : "===(протокол зависит от внешней системы)"
+
+@enduml
+
+PlantUML version 1.2020.02(Sun Mar 01 13:22:07 MSK 2020)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Java Version: 11.0.20.1+1-post-Ubuntu-0ubuntu122.04
+Operating System: Linux
+Default Encoding: UTF-8
+Language: en
+Country: null
+--></g></svg>
