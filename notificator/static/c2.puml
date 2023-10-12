@@ -1,0 +1,57 @@
+@startuml c2
+
+!include <C4/C4_Container>
+
+LAYOUT_WITH_LEGEND()
+
+
+Person(c1_sender, "Компоненты системы, которые хотят отправить оповещение", "Controller / Component Foo / Component Bar / etc.") 
+
+
+System_Boundary(c1_service, "Сервис отправки оповещений") {
+    Container(c2_gateway, "API Gateway", "Nginx", "Отвечает за авторизацию, маршрутизацию и балансировку нагрузки")
+
+    Container(c2_notifier_service, "Сервис рассылки оповещений", "Python", "Управляет отправкой оповещений (вместе с фичами настройки и мультиплексирования отправки)")
+
+    ' FIXME: тут должен быть ContainerQueue, но мой "PlantUML Version 1.2020.02" (используемый в WSL2) почему-то падает
+    Container(c2_message_queue, "Брокер сообщений", "RabbitMQ", "Хранит очередь сообщений, контролирует доставку")
+
+    Container(c2_sms_processor, "Сервис для отправки SMS", "Python", "Отправляет сообщение, контролирует результат отправки")
+    Container(c2_email_processor, "Сервис для отправки Email", "Python", "Отправляет сообщение, контролирует результат отправки")
+    Container(c2_push_processor, "Сервис для отправки Push-нотификаций", "Python", "Отправляет сообщение, контролирует результат отправки")
+
+    ContainerDb(c2_database, "Database", "PostgreSQL", "Хранит настройки по каждому каналу связи для рассылки уведомлений")
+
+    Boundary(c2_logging, "Логирование") {
+        Container(c2_exporter, "Exporter", "-", "Собирает метрики для Prometheus")
+        Container(c2_prometheus, "Prometheus", "-", "Собирает и хранит метрики (сервисов и брокера сообщений)")
+    }
+}
+
+
+System_Boundary(c1_channel, "Каналы связи (email, push, sms)") {
+    System_Ext(c2_sms_system, "Система отправки SMS")
+    System_Ext(c2_email_system, "Система отправки Email сообщений")
+    System_Ext(c2_push_system, "Система отправки Push-нотификаций")
+}
+
+Rel(c2_prometheus, c2_exporter, "Скрапит экспортеры")
+
+Rel_Right(c1_sender, c2_gateway, "Отправляет запрос на отправку оповещения")
+Rel_Right(c1_sender, c2_gateway, "Отправляет запрос на изменение настроек канала связи")
+
+Rel(c2_gateway, c2_notifier_service, "Перенаправляет запросы")
+
+Rel_Down(c2_notifier_service, c2_message_queue, "Отправляет сообщения в очередь")
+Rel_Left(c2_notifier_service, c2_database, "Сохраняет настройки канала связи")
+Rel_Left(c2_database, c2_notifier_service, "Получает настройки канала связи")
+
+Rel(c2_message_queue, c2_sms_processor, "Отправляет сообщения исполнителю")
+Rel(c2_message_queue, c2_email_processor , "Отправляет сообщения исполнителю")
+Rel(c2_message_queue, c2_push_processor, "Отправляет сообщения исполнителю")
+
+Rel(c2_sms_processor, c2_sms_system, "Отправляет SMS")
+Rel(c2_email_processor, c2_email_system, "Отправляет Email")
+Rel(c2_push_processor, c2_push_system, "Отправляет Push-нотификаций")
+
+@enduml
