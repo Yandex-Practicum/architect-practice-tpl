@@ -15,6 +15,7 @@ namespace ParkingApp.Model.EntityFramework
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Booking> Bookings { get; set; }
         public DbSet<Spot> Spots { get; set; }
+        public DbSet<EmailNotify> EmailNotifys { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

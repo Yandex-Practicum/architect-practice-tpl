@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkingApp.Model.EntityFramework;
+using ParkingApp.Services.Employees;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace ParkingApp.Controllers
 {
@@ -8,16 +11,28 @@ namespace ParkingApp.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly ILogger<EmployeesController> _logger;
+        private readonly IEmployeesService _employ;
 
-        public EmployeesController(ILogger<EmployeesController> logger)
+        public EmployeesController(ILogger<EmployeesController> logger, IEmployeesService employ)
         {
             _logger = logger;
+            _employ = employ;
         }
         [HttpGet]
         [Route("booking-balance")]
-        public IActionResult GetBalance()
+        public async Task<IActionResult> GetBalance()
         {
-            return Ok("GET booking-balance");
+            var login = await _employ.CheckLogin(Request);
+            if (login != null && login != string.Empty)
+            {
+                var res = await _employ.GetBalance(login);
+                if (res is not null)
+                    return Ok(new {balance = res});
+                else
+                    return BadRequest();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
         [HttpGet]
         [Route("available-spots")]

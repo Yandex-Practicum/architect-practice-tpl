@@ -1,4 +1,5 @@
-﻿using ParkingApp.Model.EntityFramework;
+﻿using ParkingApp.Model;
+using ParkingApp.Model.EntityFramework;
 
 namespace ParkingApp.Services.Managers
 {
@@ -13,5 +14,8 @@ namespace ParkingApp.Services.Managers
         Task<Employee?> GetEmployee(string login);
         Task<List<string>> GetEmployees();
         Task<bool> Register(string code, string login);
+        Task<bool> SetGeneralLimit(int limit);
+        Task<bool> SetNotifyRule(NotifyRuleQuery rule);
+        Task<bool> SetPersonalLimit(string login, int limit);
     }
 }

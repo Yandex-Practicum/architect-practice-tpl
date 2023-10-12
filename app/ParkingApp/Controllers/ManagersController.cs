@@ -199,25 +199,55 @@ namespace ParkingApp.Controllers
             else
                 return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
-
+        /// <summary>
+        /// Установка лимитов для всех сотрудников
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [Route("booking-limits")]
-        public IActionResult SetLimits()
+        public async  Task<IActionResult> SetLimits(AddLimitQuery query)
         {
-            return Ok("POST booking-limits");
+            if (await _managers.CheckManagerRequest(Request))
+            {
+                var res = await _managers.SetGeneralLimit(query.Limit);
+                if (res)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
         [HttpPost]
         [Route("booking-limits/{employeeLogin}")]
-        public IActionResult SetPersonalLimits(string employeeLogin)
+        public async Task<IActionResult> SetPersonalLimits(string employeeLogin, [FromBody] AddLimitQuery query)
         {
-            return Ok($"POST booking-limits/{employeeLogin}");
+            if (await _managers.CheckManagerRequest(Request))
+            {
+                var res = await _managers.SetPersonalLimit(employeeLogin ,query.Limit);
+                if (res)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
 
         [HttpPost]
         [Route("email-settings")]
-        public IActionResult SetEmailSettings() 
+        public async Task<IActionResult> SetEmailSettings(NotifyRuleQuery query) 
         {
-            return Ok("POST email-settings");
+            if (await _managers.CheckManagerRequest(Request))
+            {
+                var res = await _managers.SetNotifyRule(query);
+                if (res)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
     }
 }

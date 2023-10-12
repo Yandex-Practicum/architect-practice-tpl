@@ -30,7 +30,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddSingleton<IManagersService, ManagersService>();
+builder.Services.AddTransient<IManagersService, ManagersService>();
 builder.Services.AddTransient<IEmployeesService, EmployeesService>();
 
 var app = builder.Build();

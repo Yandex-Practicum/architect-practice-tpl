@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ParkingApp.Model;
 using ParkingApp.Model.EntityFramework;
 using System.ComponentModel;
 
@@ -170,6 +171,43 @@ namespace ParkingApp.Services.Managers
             return result;
         }
 
+        public async Task<bool> SetGeneralLimit(int limit)
+        {
+            bool result = false;
+            try
+            {
+                using var db = new ParkingContext();
+                var res = db.Employees.ExecuteUpdate(s => s.SetProperty(e=>e.MonthlyLimit, limit));
+                result = res > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return false;
+            }
+            return result;
+        }
+        public async Task<bool> SetPersonalLimit(string login, int limit)
+        {
+            bool result = false;
+            try
+            {
+                using var db = new ParkingContext();
+                var emp = db.Employees.Where(emp => emp.Login == login).FirstOrDefault();
+                if (emp is null)
+                    return false;
+                emp.MonthlyLimit = limit;
+                var res = await db.SaveChangesAsync();
+                result = res > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex.Message);
+                return false;
+            }
+            return result;
+        }
+
         public async Task<bool> DeleteSpot(string spot)
         {
             bool result = false;
@@ -192,6 +230,35 @@ namespace ParkingApp.Services.Managers
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
+                return false;
+            }
+            return result;
+        }
+
+        public async Task<bool> SetNotifyRule(NotifyRuleQuery rule)
+        {
+            bool result = false;
+            try
+            {
+                using var db = new ParkingContext();
+                var nrule = (from rl in db.EmailNotifys
+                            select rl).FirstOrDefault();
+                if (nrule is not null)
+                {
+                    nrule.EmailTemplate = rule.EmailTemplate;
+                    nrule.SendTime = rule.SendTime;
+                    nrule.EmailTemplate = rule.EmailTemplate;
+                }
+                else
+                {
+                    db.EmailNotifys.Add(new EmailNotify { EmailTemplate = rule.EmailTemplate, SendTime = rule.SendTime, RecieverEmail = rule.ReceiverEmail });  
+                }
+                var res = await db.SaveChangesAsync();
+                result = res > 0;
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex.Message);
                 return false;
             }
             return result;
