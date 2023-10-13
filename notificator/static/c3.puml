@@ -1,0 +1,55 @@
+@startuml c3
+
+!include <C4/C4_Container>
+
+LAYOUT_WITH_LEGEND()
+
+
+Person(c1_sender, "Компоненты системы, которые хотят отправить оповещение", "Controller / Component Foo / Component Bar / etc.") 
+
+
+System_Boundary(c1_service, "Сервис отправки оповещений") {
+    Container(c2_gateway, "API Gateway", "Nginx", "Отвечает за авторизацию, маршрутизацию и балансировку нагрузки")
+
+    Container(c2_notifier_service, "Сервис рассылки оповещений", "Python", "Управляет отправкой оповещений (вместе с фичами настройки и мультиплексирования отправки)")
+
+    Boundary(c2_message_queue, "Брокер сообщений") {
+        Container(c3_sms_queue, "Очередь для SMS", "RabbitMQ")
+        Container(c3_email_queue, "Очередь для Email сообщений", "RabbitMQ")
+        Container(c3_push_queue, "Очередь для Push-нотификаций", "RabbitMQ")
+    }
+
+    Container(c2_sms_processor, "Сервис для отправки SMS", "Python", "Отправляет сообщение, контролирует результат отправки")
+    Container(c2_email_processor, "Сервис для отправки Email", "Python", "Отправляет сообщение, контролирует результат отправки")
+    Container(c2_push_processor, "Сервис для отправки Push-нотификаций", "Python", "Отправляет сообщение, контролирует результат отправки")
+
+    ContainerDb(c2_database, "Database", "PostgreSQL", "Хранит настройки уведомлений каждого пользователя")
+}
+
+
+System_Boundary(c1_channel, "Каналы связи (email, push, sms)") {
+  System_Ext(c2_sms_system, "Система отправки SMS")
+  System_Ext(c2_email_system, "Система отправки Email сообщений")
+  System_Ext(c2_push_system, "Система отправки Push-нотификаций")
+}
+
+
+Rel_Right(c1_sender, c2_gateway, "https/json")
+
+Rel(c2_gateway, c2_notifier_service, "https/json")
+
+Rel_Down(c2_notifier_service, c3_sms_queue, "AMQP")
+Rel_Down(c2_notifier_service, c3_email_queue, "AMQP")
+Rel_Down(c2_notifier_service, c3_push_queue, "AMQP")
+Rel_Left(c2_notifier_service, c2_database, "(postgres)")
+Rel_Left(c2_database, c2_notifier_service, "(postgres)")
+
+Rel(c3_sms_queue, c2_sms_processor, "AMQP")
+Rel(c3_email_queue, c2_email_processor , "AMQP")
+Rel(c3_push_queue, c2_push_processor, "AMQP")
+
+Rel(c2_sms_processor, c2_sms_system, "(протокол зависит от внешней системы)")
+Rel(c2_email_processor, c2_email_system, "(протокол зависит от внешней системы)")
+Rel(c2_push_processor, c2_push_system, "(протокол зависит от внешней системы)")
+
+@enduml

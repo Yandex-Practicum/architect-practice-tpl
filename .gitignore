@@ -20,4 +20,5 @@ vendor/
 
 # IDEs directories
 .idea
+.obsidian
 .vscode
