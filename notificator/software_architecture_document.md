@@ -25,7 +25,6 @@
 | --- | --- | --- | --- | --- |
 | [ADR-001](https://github.com/a-gataullin/architect-practice-tpl/blob/main/notificator/static/ADR-001.md) | 13.10.2023 | Принято | Гатауллин Артур | Использовать Nginx для API gateway |
 | [ADR-002](https://github.com/a-gataullin/architect-practice-tpl/blob/main/notificator/static/ADR-002.md) | 13.10.2023 | Принято | Гатауллин Артур | Использовать Rabbit MQ для очереди сообщений |
-| [ADR-003](https://github.com/a-gataullin/architect-practice-tpl/blob/main/notificator/static/ADR-003.md) | 13.10.2023 | Принято | Гатауллин Артур | Использовать Postgresql для хранилища настроек пользователя |
-| [ADR-004](https://github.com/a-gataullin/architect-practice-tpl/blob/main/notificator/static/ADR-004.md) | 13.10.2023 | Принято | Гатауллин Артур | Использовать реляционную базу данных для хранилища настроек пользователя
- |
+| [ADR-003](https://github.com/a-gataullin/architect-practice-tpl/blob/main/notificator/static/ADR-003.md) | 13.10.2023 | Принято | Гатауллин Артур | Использовать реляционную базу данных для хранилища настроек пользователя
+| [ADR-004](https://github.com/a-gataullin/architect-practice-tpl/blob/main/notificator/static/ADR-004.md) | 13.10.2023 | Принято | Гатауллин Артур | Использовать Postgresql для хранилища настроек пользователя |
 
