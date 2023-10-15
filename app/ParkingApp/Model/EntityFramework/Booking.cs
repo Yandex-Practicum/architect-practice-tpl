@@ -6,24 +6,21 @@ namespace ParkingApp.Model.EntityFramework
 {
     public class Booking
     {
-        private int? id = null!;
         [JsonIgnore]
         public int? Id 
-        { 
-            get => id; 
-            set 
-            {
-                IdStr = value.ToString();
-                id = value; 
-            } 
+        {
+            get;
+            set; 
+           
         }
         [NotMapped]
         [JsonPropertyName("id")]
-        public string? IdStr {  get; set; }
-        [NotMapped]
+        public string? IdStr {  get => Id.ToString(); }
         [JsonPropertyName("spot_code")]
         public string SpotCode { get; set; }
         [JsonPropertyName("date")]
+        public string DateStr { get => $"{Date.Year}-{Date.Month}-{Date.Day}"; }
+        [JsonIgnore]
         public DateTime Date { get; set; }
         [JsonPropertyName("car_plate_number")]
         public string CarPlateNumber { get; set; }

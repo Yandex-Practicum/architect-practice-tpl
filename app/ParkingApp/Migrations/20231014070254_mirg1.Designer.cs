@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ParkingApp.Model.EntityFramework;
 
@@ -10,9 +11,11 @@ using ParkingApp.Model.EntityFramework;
 namespace ParkingApp.Migrations
 {
     [DbContext(typeof(ParkingContext))]
-    partial class ParkingContextModelSnapshot : ModelSnapshot
+    [Migration("20231014070254_mirg1")]
+    partial class mirg1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.11");
@@ -34,11 +37,6 @@ namespace ParkingApp.Migrations
 
                     b.Property<int>("EmployeeId")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("SpotCode")
-                        .IsRequired()
-                        .HasColumnType("TEXT")
-                        .HasAnnotation("Relational:JsonPropertyName", "spot_code");
 
                     b.Property<string>("Status")
                         .IsRequired()

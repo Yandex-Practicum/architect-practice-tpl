@@ -22,6 +22,7 @@ for (int i = 0; i < args.Count(); i++)
     }
     
 }
+;
 
 // Add services to the container.
 

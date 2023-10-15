@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ParkingApp.Model;
 using ParkingApp.Model.EntityFramework;
 using ParkingApp.Services.Employees;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
@@ -18,6 +19,10 @@ namespace ParkingApp.Controllers
             _logger = logger;
             _employ = employ;
         }
+        /// <summary>
+        /// Получение текущего баланса бронирования
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("booking-balance")]
         public async Task<IActionResult> GetBalance()
@@ -34,29 +39,74 @@ namespace ParkingApp.Controllers
             else
                 return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
+        /// <summary>
+        /// Получение доступных мест бронирования
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("available-spots")]
-        public IActionResult GetFreeSpots() 
+        public async Task<IActionResult> GetFreeSpots() 
         {
-            return Ok("GET available-spots");
+            var login = await _employ.CheckLogin(Request);
+            if (login != null && login != string.Empty)
+            {
+                var res = await _employ.GetAvailableSpots();
+                if (res is not null)
+                    return Ok(new { date = $"{DateTime.Now.Year}-{DateTime.Now.Month}-{DateTime.Now.Day}",
+                                    available_spots = res});
+                else
+                    return BadRequest();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
         [HttpPost]
         [Route("book-spot")]
-        public IActionResult BookSpot()
+        public async Task<IActionResult> BookSpot(BookSpotQuery query)
         {
-            return Ok("POST book-spot");
+            var login = await _employ.CheckLogin(Request);
+            if (login != null && login != string.Empty)
+            {
+                var res = await _employ.BookSpot(login, query);
+                if (res)
+                    return Ok(); 
+                else
+                    return BadRequest();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
         [HttpPost]
         [Route("bookings/{id}/cancel")]
-        public IActionResult BookCancel(string id)
+        public async Task<IActionResult> BookCancel(string id)
         {
-            return Ok($"POST bookings/{id}/cancel");
+            var login = await _employ.CheckLogin(Request);
+            if (login != null && login != string.Empty)
+            {
+                var res = await _employ.CancelBooking(id);
+                if (res)
+                    return Ok();
+                else
+                    return BadRequest();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
         [HttpGet]
         [Route("bookings")]
-        public IActionResult GetBookings() 
+        public async Task<IActionResult> GetBookings() 
         {
-            return Ok("GET bookings");
+            var login = await _employ.CheckLogin(Request);
+            if (login != null && login != string.Empty)
+            {
+                var res = await _employ.GetBookings(login);
+                if (res is not null)
+                    return Ok(new { bookings = res});
+                else
+                    return BadRequest();
+            }
+            else
+                return new StatusCodeResult(StatusCodes.Status203NonAuthoritative);
         }
     }
 }
