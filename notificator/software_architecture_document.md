@@ -41,6 +41,7 @@
 | 16.10.2023 | Евгений Климов | Актуализация: Функциональное Представление       |
 | 16.10.2023 | Евгений Климов | Описание процессов                               |
 | 16.10.2023 | Евгений Климов | Дополнено описание ADR в Обзор                   |
+| 16.10.2023 | Евгений Климов | Обновлена Диаграмма контекста                    |
 
 ### Краткий обзор
 
@@ -161,7 +162,86 @@
 ![C1](static/c1.svg)
 
 ### Диаграмма контекста (C2):
-![C2](static/c2.drawio.svg)
+```mermaid
+C4Context
+
+    System(OutSystem, "Внешняя система", "Software system")
+    SystemQueue(q0, "Kafka")
+
+    BiRel(OutSystem, q0, "")
+    UpdateRelStyle(OutSystem, q0, $lineColor="blue")
+
+    Enterprise_Boundary(b1, "Сервис отправки оповещений") {
+        System(IntSystem, "Интерфейс взаимодействия", "Software system")
+        System(RepSystem, "Репозитории", "Software system")
+        System(MonSystem, "Модуль мониторинга и аналитики", "Software system")
+        SystemDb(DbSystem, "Хранилище настроек и сообщений", "PostgreSQL")
+
+        Enterprise_Boundary(b2, "Обработка Очереди сообщений") {
+            System(SysQueue, "Сервис для обработки Очереди", "Software system")
+            System(SysMul, "Механизм мультиплексирования", "Software system")
+
+            System(SysEmail, "Модуль рассылки по email", "Software system")
+            System(SysSms, "Модуль рассылки по SMS", "Software system")
+            System(SysPush, "Модуль push-уведомлений", "Software system")
+        }
+
+        System(SysProx, "Управление безопасностью и прокси", "Software system")
+    }
+
+    Boundary(b3, "Провайдеры API") {
+        System_Ext(OutMail, "JavaMail API", "Software system")
+        System_Ext(OutTwillo, "Twilio", "Software system")
+        System_Ext(OutFcm, "FCM", "Software system")
+    }
+
+    BiRel(q0, IntSystem, "")
+    BiRel(IntSystem, RepSystem, "")
+    BiRel(RepSystem, DbSystem, "")
+    Rel(IntSystem, MonSystem, "")
+    BiRel(SysQueue, RepSystem, "")
+    BiRel(SysQueue, SysMul, "")
+
+    BiRel(SysMul, SysEmail, "")
+    BiRel(SysMul, SysSms, "")
+    BiRel(SysMul, SysPush, "")
+
+    BiRel(SysEmail, SysProx, "")
+    BiRel(SysSms, SysProx, "")
+    BiRel(SysPush, SysProx, "")
+
+    Rel(SysMul, MonSystem, "")
+
+    Rel(SysQueue, IntSystem, "")
+
+    BiRel(SysProx, OutMail, "")
+    BiRel(SysProx, OutTwillo, "")
+    BiRel(SysProx, OutFcm, "")
+
+    UpdateRelStyle(q0, IntSystem, $lineColor="blue")
+    UpdateRelStyle(IntSystem, RepSystem, $lineColor="blue")
+    UpdateRelStyle(RepSystem, DbSystem, $lineColor="blue")
+    UpdateRelStyle(IntSystem, MonSystem, $lineColor="green")
+    UpdateRelStyle(SysQueue, RepSystem, $lineColor="blue")
+    UpdateRelStyle(SysQueue, SysMul, $lineColor="blue")
+
+    UpdateRelStyle(SysMul, SysEmail, $lineColor="blue")
+    UpdateRelStyle(SysMul, SysSms, $lineColor="blue")
+    UpdateRelStyle(SysMul, SysPush, $lineColor="blue")
+    UpdateRelStyle(SysEmail, SysProx, $lineColor="yellow")
+    UpdateRelStyle(SysSms, SysProx, $lineColor="yellow")
+    UpdateRelStyle(SysPush, SysProx, $lineColor="yellow")
+
+    UpdateRelStyle(SysMul, MonSystem, $lineColor="green")
+
+    UpdateRelStyle(SysQueue, IntSystem, $lineColor="black")
+
+    UpdateRelStyle(SysProx, OutMail, $lineColor="red")
+    UpdateRelStyle(SysProx, OutTwillo, $lineColor="red")
+    UpdateRelStyle(SysProx, OutFcm, $lineColor="red")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="2")
+```
 
 Предполагается, что любой из существующих компонентов может отправить оповещение пользователю. При этом существующие каналы связи и предпочтения по их использованию известны системе оповещений, компоненты остальной системы знать это не должны.
 
