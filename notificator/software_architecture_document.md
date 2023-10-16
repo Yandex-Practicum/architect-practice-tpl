@@ -163,10 +163,12 @@
 sequenceDiagram
     participant ExternalService as "Внешний сервис"
     box NotifyX
+        participant InteractionInterface as "Интерфейс взаимодействия"
         participant NotificationSystem as "Подсистема управления оповещениями"
+        participant Repositories as "Репозитории"
         participant SettingsStorage as "Хранилище настроек"
         participant Monitoring as "Модуль мониторинга и аналитики"
-        participant Queues as "Очереди для обработки объемов"
+        participant Queues as "Сервис для обработки Очереди"
         participant Multiplexer as "Механизм мультиплексирования"
         participant EmailModule as "Модуль рассылки по email"
         participant SMSModule as "Модуль рассылки по SMS"
@@ -180,69 +182,66 @@ sequenceDiagram
     end
 
     alt Отправка сообения в очередь
-        ExternalService ->> NotificationSystem: Запрос на отправку оповещения
-        activate NotificationSystem
-        NotificationSystem ->> SettingsStorage: Запрос настройки пользователя
-        activate SettingsStorage
-        SettingsStorage -->> NotificationSystem: Настройки пользователя
-        deactivate SettingsStorage
-        NotificationSystem ->> Queues: Добавление оповещения в очередь
-        activate Queues
-        Queues -->> NotificationSystem: Подтверждение добавления
-        deactivate Queues
-        NotificationSystem -->> ExternalService: Подтверждение добавления в очередь
-        deactivate NotificationSystem
+        ExternalService ->>+ InteractionInterface: Запрос на отправку оповещения
+        InteractionInterface ->>+ NotificationSystem: Запрос на отправку оповещения
+        NotificationSystem ->>+ Repositories: Запись сообщения в бд таблицу Очереди сообщений
+        Repositories ->>+ SettingsStorage: Запись сообщения в бд
+        SettingsStorage -->>- Repositories: Сообщение сохранено
+        Repositories -->>- NotificationSystem: Сообщение сохранено
+        NotificationSystem --) Monitoring: Запись статуса отправки
+        NotificationSystem -->>- InteractionInterface: Подтверждение добавления в очередь
+        InteractionInterface -->>- ExternalService: Подтверждение добавления в очередь
     end
 
-    activate Queues
-    par Отпрака email
-        Queues ->> Multiplexer: Обработка сообщения
+    loop Обработка сообщений
         activate Queues
-        Multiplexer ->> EmailModule: Отправка оповещения по email
-        activate EmailModule
-        EmailModule ->> Security: Прокси
-        activate Security
-        Security ->>+ JavaMailAPI: Запрос отправки по email
-        JavaMailAPI -->>- Security: Подтверждение отправки
-        Security -->> EmailModule: Подтверждение отправки
-        deactivate Security
-        EmailModule -->> Multiplexer: Подтверждение отправки
-        deactivate EmailModule
-        Multiplexer --) Monitoring: Запись статуса отправки
-        Multiplexer -->> Queues: Подтверждение отправки
+        Queues ->>+ Repositories: Запрос сообщения из очереди
+        Repositories ->>+ SettingsStorage: Запрос сообщения из очереди
+        SettingsStorage -->>- Repositories: Получение сообщения из очереди
+        Repositories -->>- Queues: Получение сообщения из очереди
+
+        Queues ->>+ Repositories: Запрос настройки пользователя
+        Repositories ->>+ SettingsStorage: Запрос настройки пользователя
+        SettingsStorage -->>- Repositories: Настройки пользователя
+        Repositories -->>- Queues: Настройки пользователя
+
+        par Отпрака email
+            Queues ->> Multiplexer: Обработка сообщения
+            Multiplexer ->> EmailModule: Отправка оповещения по email
+            EmailModule ->> Security: Прокси
+            Security ->>+ JavaMailAPI: Запрос отправки по email
+            JavaMailAPI -->>- Security: Подтверждение отправки
+            Security -->> EmailModule: Подтверждение отправки
+            EmailModule -->> Multiplexer: Подтверждение отправки
+            Multiplexer --) Monitoring: Запись статуса отправки
+            Multiplexer -->> Queues: Подтверждение отправки
+
+        and Отпрака SMS
+            Queues ->>+ Multiplexer: Обработка сообщения
+            Multiplexer ->>+ SMSModule: Отправка оповещения по SMS
+            SMSModule ->>+ Security: Прокси
+            Security ->>+ Twilio: Запрос отправки по SMS
+            Twilio -->>- Security: Подтверждение отправки
+            Security -->>- SMSModule: Подтверждение отправки
+            SMSModule -->>- Multiplexer: Подтверждение отправки
+            Multiplexer --) Monitoring: Запись статуса отправки
+            Multiplexer -->>- Queues: Подтверждение отправки
+
+        and Отпрака push-уведомления
+            Queues ->>+ Multiplexer: Обработка сообщения
+            Multiplexer ->>+ PushModule: Отправка push-уведомления
+            PushModule ->>+ Security: Прокси
+            Security ->>+ FCM: Запрос отправки push-уведомления
+            FCM -->>- Security: Подтверждение отправки
+            Security -->>- PushModule: Подтверждение отправки
+            PushModule -->>- Multiplexer: Подтверждение отправки
+            Multiplexer --) Monitoring: Запись статуса отправки
+            Multiplexer -->>- Queues: Подтверждение отправки
+        end
+
+        Queues --) NotificationSystem: Подтверждение отправки оповещения
         deactivate Queues
+
+        NotificationSystem --) ExternalService: Подтверждение отправки оповещения
     end
-
-    par Отпрака SMS
-        Queues ->> Multiplexer: Обработка сообщения
-        activate Queues
-        Multiplexer ->>+ SMSModule: Отправка оповещения по SMS
-        SMSModule ->>+ Security: Прокси
-        Security ->>+ Twilio: Запрос отправки по SMS
-        Twilio -->>- Security: Подтверждение отправки
-        Security -->>- SMSModule: Подтверждение отправки
-        SMSModule -->>- Multiplexer: Подтверждение отправки
-        Multiplexer --) Monitoring: Запись статуса отправки
-        Multiplexer -->> Queues: Подтверждение отправки
-        deactivate Queues
-    end
-
-    par Отпрака push-уведомления
-        Queues ->> Multiplexer: Обработка сообщения
-        activate Queues
-        Multiplexer ->>+ PushModule: Отправка push-уведомления
-        PushModule ->>+ Security: Прокси
-        Security ->>+ FCM: Запрос отправки push-уведомления
-        FCM -->>- Security: Подтверждение отправки
-        Security -->>- PushModule: Подтверждение отправки
-        PushModule -->>- Multiplexer: Подтверждение отправки
-        Multiplexer --) Monitoring: Запись статуса отправки
-        Multiplexer -->> Queues: Подтверждение отправки
-        deactivate Queues
-    end
-
-    Queues --) NotificationSystem: Подтверждение отправки оповещения
-    deactivate Queues
-
-    NotificationSystem --) ExternalService: Подтверждение отправки оповещения
 ```
