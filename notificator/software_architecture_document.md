@@ -158,3 +158,91 @@
 Краткое резюме общей целевой архитектуры (Common Target Architecture, CTA) представляет собой высокоуровневую архитектурную концепцию, созданную для обеспечения базы и ориентира для более подробных архитектурных решений, которые будут представлены далее в рамках проекта. Проект также использует [ADL (Architectural Decision Log)](adl.md) для документирования ключевых архитектурных решений и обоснований.
 
 ##### Функциональное Представление
+
+```mermaid
+sequenceDiagram
+    participant ExternalService as "Внешний сервис"
+    box NotifyX
+        participant NotificationSystem as "Подсистема управления оповещениями"
+        participant SettingsStorage as "Хранилище настроек"
+        participant Monitoring as "Модуль мониторинга и аналитики"
+        participant Queues as "Очереди для обработки объемов"
+        participant Multiplexer as "Механизм мультиплексирования"
+        participant EmailModule as "Модуль рассылки по email"
+        participant SMSModule as "Модуль рассылки по SMS"
+        participant PushModule as "Модуль push-уведомлений"
+        participant Security as "Управление безопасностью и прокси"
+    end
+    box Api
+        participant JavaMailAPI as "JavaMail API"
+        participant Twilio as "Twilio"
+        participant FCM as "FCM"
+    end
+
+    alt Отправка сообения в очередь
+        ExternalService ->> NotificationSystem: Запрос на отправку оповещения
+        activate NotificationSystem
+        NotificationSystem ->> SettingsStorage: Запрос настройки пользователя
+        activate SettingsStorage
+        SettingsStorage -->> NotificationSystem: Настройки пользователя
+        deactivate SettingsStorage
+        NotificationSystem ->> Queues: Добавление оповещения в очередь
+        activate Queues
+        Queues -->> NotificationSystem: Подтверждение добавления
+        deactivate Queues
+        NotificationSystem -->> ExternalService: Подтверждение добавления в очередь
+        deactivate NotificationSystem
+    end
+
+    activate Queues
+    par Отпрака email
+        Queues ->> Multiplexer: Обработка сообщения
+        activate Queues
+        Multiplexer ->> EmailModule: Отправка оповещения по email
+        activate EmailModule
+        EmailModule ->> Security: Прокси
+        activate Security
+        Security ->>+ JavaMailAPI: Запрос отправки по email
+        JavaMailAPI -->>- Security: Подтверждение отправки
+        Security -->> EmailModule: Подтверждение отправки
+        deactivate Security
+        EmailModule -->> Multiplexer: Подтверждение отправки
+        deactivate EmailModule
+        Multiplexer --) Monitoring: Запись статуса отправки
+        Multiplexer -->> Queues: Подтверждение отправки
+        deactivate Queues
+    end
+
+    par Отпрака SMS
+        Queues ->> Multiplexer: Обработка сообщения
+        activate Queues
+        Multiplexer ->>+ SMSModule: Отправка оповещения по SMS
+        SMSModule ->>+ Security: Прокси
+        Security ->>+ Twilio: Запрос отправки по SMS
+        Twilio -->>- Security: Подтверждение отправки
+        Security -->>- SMSModule: Подтверждение отправки
+        SMSModule -->>- Multiplexer: Подтверждение отправки
+        Multiplexer --) Monitoring: Запись статуса отправки
+        Multiplexer -->> Queues: Подтверждение отправки
+        deactivate Queues
+    end
+
+    par Отпрака push-уведомления
+        Queues ->> Multiplexer: Обработка сообщения
+        activate Queues
+        Multiplexer ->>+ PushModule: Отправка push-уведомления
+        PushModule ->>+ Security: Прокси
+        Security ->>+ FCM: Запрос отправки push-уведомления
+        FCM -->>- Security: Подтверждение отправки
+        Security -->>- PushModule: Подтверждение отправки
+        PushModule -->>- Multiplexer: Подтверждение отправки
+        Multiplexer --) Monitoring: Запись статуса отправки
+        Multiplexer -->> Queues: Подтверждение отправки
+        deactivate Queues
+    end
+
+    Queues --) NotificationSystem: Подтверждение отправки оповещения
+    deactivate Queues
+
+    NotificationSystem --) ExternalService: Подтверждение отправки оповещения
+```
