@@ -383,6 +383,7 @@ sequenceDiagram
         Queues --) NotificationSystem: Подтверждение отправки оповещения
         deactivate Queues
 
-        NotificationSystem --) ExternalService: Подтверждение отправки оповещения
+        NotificationSystem --) InteractionInterface: Подтверждение отправки оповещения
+        InteractionInterface --) ExternalService: Подтверждение отправки оповещения
     end
 ```
