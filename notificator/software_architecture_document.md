@@ -157,7 +157,6 @@
 
 ![alt text](static/current_arch.svg)
 
-
 ## Целевая архитектура
 ### Диаграмма контекста (C1):
 ![C1](static/c1.svg)
@@ -240,6 +239,10 @@ C4Context
     UpdateRelStyle(SysProx, OutMail, $lineColor="red")
     UpdateRelStyle(SysProx, OutTwillo, $lineColor="red")
     UpdateRelStyle(SysProx, OutFcm, $lineColor="red")
+
+    UpdateElementStyle(b1, $borderColor="red", $legendSprite="red")
+    UpdateElementStyle(b2, $borderColor="red", $legendSprite="red")
+    UpdateElementStyle(b3, $borderColor="red", $legendSprite="red")
 
     UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="2")
 ```
