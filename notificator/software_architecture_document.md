@@ -173,10 +173,12 @@ C4Context
     UpdateRelStyle(OutSystem, q0, $lineColor="blue")
 
     Enterprise_Boundary(b1, "Сервис отправки оповещений") {
+        SystemDb(DbSystem, "Хранилище настроек и сообщений", "PostgreSQL")
         System(IntSystem, "Интерфейс взаимодействия", "Software system")
         System(RepSystem, "Репозитории", "Software system")
         System(MonSystem, "Модуль мониторинга и аналитики", "Software system")
-        SystemDb(DbSystem, "Хранилище настроек и сообщений", "PostgreSQL")
+
+        System(SysProx, "Управление безопасностью и прокси", "Software system")
 
         Enterprise_Boundary(b2, "Обработка Очереди сообщений") {
             System(SysQueue, "Сервис для обработки Очереди", "Software system")
@@ -186,8 +188,6 @@ C4Context
             System(SysSms, "Модуль рассылки по SMS", "Software system")
             System(SysPush, "Модуль push-уведомлений", "Software system")
         }
-
-        System(SysProx, "Управление безопасностью и прокси", "Software system")
     }
 
     Boundary(b3, "Провайдеры API") {
