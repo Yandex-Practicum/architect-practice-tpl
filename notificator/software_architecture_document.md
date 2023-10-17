@@ -43,6 +43,7 @@
 | 17.10.2023 | Евгений Климов | Дополнено описание ADR в Обзор                   |
 | 17.10.2023 | Евгений Климов | Обновлена Диаграмма контекста                    |
 | 17.10.2023 | Евгений Климов | Обновлена диаграмма последовательности           |
+| 17.10.2023 | Евгений Климов | Диаграмма контейнеров                            |
 
 ### Краткий обзор
 
@@ -246,6 +247,49 @@ C4Context
 
     UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="2")
 ```
+
+### Диаграмма контейнеров (C2):
+```mermaid
+C4Container
+
+    System(OutSystem, "Внешняя система", "Software system")
+    SystemQueue(q0, "Kafka")
+
+    BiRel(OutSystem, q0, "")
+    UpdateRelStyle(OutSystem, q0, $lineColor="blue")
+
+    Container_Boundary(b1, "Сервис отправки оповещений") {
+        SystemDb(DbSystem, "Хранилище настроек и сообщений", "PostgreSQL")
+        Container(IntSystem, "c# asp .net", "Сервис сообщений")
+    }
+
+    Boundary(b3, "Провайдеры API") {
+        System_Ext(OutMail, "JavaMail API", "Software system")
+        System_Ext(OutTwillo, "Twilio", "Software system")
+        System_Ext(OutFcm, "FCM", "Software system")
+    }
+
+    BiRel(q0, IntSystem, "")
+    BiRel(IntSystem, DbSystem, "")
+
+    BiRel(IntSystem, OutMail, "")
+    BiRel(IntSystem, OutTwillo, "")
+    BiRel(IntSystem, OutFcm, "")
+
+    UpdateRelStyle(q0, IntSystem, $lineColor="blue")
+    UpdateRelStyle(IntSystem, DbSystem, $lineColor="blue")
+
+    UpdateRelStyle(IntSystem, OutMail, $lineColor="red")
+    UpdateRelStyle(IntSystem, OutTwillo, $lineColor="red")
+    UpdateRelStyle(IntSystem, OutFcm, $lineColor="red")
+
+    UpdateElementStyle(b1, $borderColor="red", $legendSprite="red")
+    UpdateElementStyle(b2, $borderColor="red", $legendSprite="red")
+    UpdateElementStyle(b3, $borderColor="red", $legendSprite="red")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="2")
+```
+
 
 Предполагается, что любой из существующих компонентов может отправить оповещение пользователю. При этом существующие каналы связи и предпочтения по их использованию известны системе оповещений, компоненты остальной системы знать это не должны.
 
