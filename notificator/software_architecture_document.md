@@ -44,6 +44,7 @@
 | 17.10.2023 | Евгений Климов | Обновлена Диаграмма контекста                    |
 | 17.10.2023 | Евгений Климов | Обновлена диаграмма последовательности           |
 | 17.10.2023 | Евгений Климов | Диаграмма контейнеров                            |
+| 17.10.2023 | Евгений Климов | Поправил диаграммы                               |
 
 ### Краткий обзор
 
@@ -191,9 +192,9 @@ C4Context
     }
 
     Boundary(b3, "Провайдеры API") {
-        System_Ext(OutMail, "JavaMail API", "Software system")
-        System_Ext(OutTwillo, "Twilio", "Software system")
-        System_Ext(OutFcm, "FCM", "Software system")
+        System_Ext(OutMail, "Внешнее API рассылки email", "Software system")
+        System_Ext(OutTwillo, "Внешнее API рассылки SMS", "Software system")
+        System_Ext(OutFcm, "Внешнее API push-уведомлений", "Software system")
     }
 
     BiRel(q0, IntSystem, "")
@@ -234,7 +235,6 @@ C4Context
     UpdateRelStyle(SysPush, SysProx, $lineColor="yellow")
 
     UpdateRelStyle(SysMul, MonSystem, $lineColor="green")
-
     UpdateRelStyle(SysQueue, IntSystem, $lineColor="black")
 
     UpdateRelStyle(SysProx, OutMail, $lineColor="red")
@@ -264,9 +264,9 @@ C4Container
     }
 
     Boundary(b3, "Провайдеры API") {
-        System_Ext(OutMail, "JavaMail API", "Software system")
-        System_Ext(OutTwillo, "Twilio", "Software system")
-        System_Ext(OutFcm, "FCM", "Software system")
+        System_Ext(OutMail, "Внешнее API рассылки email", "Software system")
+        System_Ext(OutTwillo, "Внешнее API рассылки SMS", "Software system")
+        System_Ext(OutFcm, "Внешнее API push-уведомлений", "Software system")
     }
 
     BiRel(q0, IntSystem, "")
@@ -362,9 +362,9 @@ sequenceDiagram
         participant Security as "Управление безопасностью и прокси"
     end
     box Api
-        participant JavaMailAPI as "JavaMail API"
-        participant Twilio as "Twilio"
-        participant FCM as "FCM"
+        participant JavaMailAPI as "Внешнее API рассылки email"
+        participant Twilio as "Внешнее API рассылки SMS"
+        participant FCM as "Внешнее API рассылки push"
     end
 
     alt Отправка сообения в очередь
